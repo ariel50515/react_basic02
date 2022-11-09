@@ -1,8 +1,14 @@
+import { useContext } from "react";
 import { Link, useLocation } from "react-router-dom";
+import ToggleButton from "./ToggleButton";
+import ThemeContext, { themes } from "../contexts/ThemeContext";
+import AuthContext from "../contexts/AuthContext";
 
 export default function Navbar() {
   const location = useLocation();
-  console.log(location.pathname);
+  const { name: themeName, setTheme } = useContext(ThemeContext);
+  const { myAuth, logout } = useContext(AuthContext);
+  console.log({ themeName });
   const seg1 = location.pathname.split("/")[1];
 
   const actives = {};
@@ -37,14 +43,47 @@ export default function Navbar() {
                 </Link>
               </li>
               <li className="nav-item">
+                <Link className="nav-link" style={actives['list-auth']} to="/list-auth">
+                  AB-list-auth
+                </Link>
+              </li>
+              <li className="nav-item">
                 <Link className="nav-link" style={actives.tmp} to="/tmp">
                   tmp
                 </Link>
               </li>
-              <li className="nav-item">
+            </ul>
+            <ul className="navbar-nav mb-2 mb-lg-0">
+              {myAuth.authorised ? (
+                <>
+                  <li className="nav-item">
+                    <a className="nav-link" href="/#">
+                      {myAuth.account}
+                    </a>
+                  </li>
+                  <li className="nav-item">
+                    <a className="nav-link" href="#/" onClick={(e)=>{
+                      e.preventDefault();
+                      logout();
+                    }}>
+                      登出
+                    </a>
+                  </li>
+                </>
+              ) : (
                 <Link className="nav-link" style={actives.login} to="/login">
                   login
                 </Link>
+              )}
+
+              <li className="nav-item">
+                <ToggleButton
+                  texts={["ლ(╹◡╹ლ)", "bling"]}
+                  statusIndex={themeName === "dark" ? 0 : 1}
+                  handler={(i) => {
+                    setTheme(i === 0 ? themes.dark : themes.light);
+                  }}
+                />
               </li>
             </ul>
           </div>
