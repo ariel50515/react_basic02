@@ -5,6 +5,7 @@ import Tmp from "./pages/Tmp";
 import Login from "./pages/Login";
 import Navbar from "./components/Navbar";
 import MyContextProviders from "./contexts/MyContextProviders";
+import Canvas1 from "./pages/Canvas1";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
             <Route path="/tmp/:sid" element={<Tmp />} />
             <Route path="/tmp" element={<Tmp />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/canvas1" element={<Canvas1 />} />
           </Routes>
         </MyContextProviders>
       </BrowserRouter>
